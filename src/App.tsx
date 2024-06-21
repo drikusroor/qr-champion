@@ -127,7 +127,7 @@ function App() {
               <input
                 type="url"
                 placeholder='https://cataas.com/cat'
-                value={logo}
+                value={logo || ''}
                 onChange={(e) => setLogo(e.target.value)}
                 className="p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
               />
