@@ -81,7 +81,7 @@ function App() {
     <>
       <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 p-6">
         <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-xl">
-          <h1 className="text-2xl font-bold mb-4 text-center">Custom QR Code Generator</h1>
+          <h1 className="text-2xl font-bold mb-4 text-center">The MCG QR Code Generator</h1>
           <form className="flex flex-col gap-4">
             <label className="flex flex-col">
               <span className="mb-1">URL:</span>
@@ -150,7 +150,7 @@ function App() {
               />
             </label>
           </form>
-          <div className="w-full mt-8 flex flex-col justify-center items-center" id="qr-code">
+          <div className="w-full mt-8 flex flex-col justify-center items-center pb-4" id="qr-code">
             <QRCodeSVG value={url} fgColor={fgColor} bgColor={bgColor} size={512} imageSettings={imageSettings} imageRendering={'pixelated'} includeMargin={true} level="H" />
             {subText && <p className="text-center font-bold text-xl">{subText}</p>}
           </div>
