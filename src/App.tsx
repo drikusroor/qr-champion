@@ -29,11 +29,6 @@ function App() {
           download(dataUrl, 'qr-code.jpg');
         });
         break;
-      case 'webp':
-        htmlToImage.toWebp(qrNode, options).then((dataUrl) => {
-          download(dataUrl, 'qr-code.webp');
-        });
-        break;
       case 'svg':
         htmlToImage.toSvg(qrNode, options).then((dataUrl) => {
           download(dataUrl, 'qr-code.svg');
@@ -87,7 +82,7 @@ function App() {
               />
             </label>
           </form>
-          <div className="mt-8 flex justify-center">
+          <div className="mt-8 flex justify-center" id="qr-code">
             <QRCodeSVG value={url} fgColor={fgColor} bgColor={bgColor} logo={logo} />
           </div>
           <div className="mt-8 grid grid-cols-2 gap-2">
