@@ -42,6 +42,7 @@ function App() {
     const files = event.target.files
 
     if (!files) {
+      console.error('No file selected');
       return;
     }
 
@@ -50,6 +51,12 @@ function App() {
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
+
+        if (typeof reader.result !== 'string') {
+          console.error('Invalid file type');
+          return;
+        }
+
         setLogo(reader.result);
       };
       reader.readAsDataURL(file);
@@ -60,6 +67,7 @@ function App() {
     const qrNode = document.getElementById('qr-code');
 
     if (!qrNode) {
+      console.error('QR Code not found');
       return;
     }
 
