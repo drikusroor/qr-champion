@@ -21,6 +21,7 @@ function App() {
   const [marginSize, setMarginSize] = useState(4)
   const [logo, setLogo] = useState<string | null>(null)
   const [imageSettings, setImageSettings] = useState<ImageSettings | undefined>(undefined)
+  const [subText, setSubText] = useState('')
 
   useEffect(() => {
     if (logo) {
@@ -29,8 +30,8 @@ function App() {
       img.onload = () => {
         setImageSettings({
           src: logo,
-          height: 64,
-          width: 64,
+          height: 128,
+          width: 128,
           excavate: true,
         });
       };
@@ -98,7 +99,7 @@ function App() {
                 type="color"
                 value={fgColor}
                 onChange={(e) => setFgColor(e.target.value)}
-                className="p-5 w-full border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                className="h-10 w-full border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
               />
             </label>
             <label className="flex flex-col">
@@ -107,7 +108,7 @@ function App() {
                 type="color"
                 value={bgColor}
                 onChange={(e) => setBgColor(e.target.value)}
-                className="p-5 w-full border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                className="h-10 w-full border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
               />
             </label>
             <label className="flex flex-col">
@@ -129,9 +130,29 @@ function App() {
                 className="p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
               />
             </label>
+            <label className="flex flex-col">
+              <span className="mb-1">Margin Size:</span>
+              <input
+                type="number"
+                value={marginSize}
+                onChange={(e) => setMarginSize(Number(e.target.value))}
+                className="p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              />
+            </label>
+            <label className="flex flex-col">
+              <span className="mb-1">Sub Text:</span>
+              <input
+                type="text"
+                placeholder="Scan me!"
+                value={subText}
+                onChange={(e) => setSubText(e.target.value)}
+                className="p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              />
+            </label>
           </form>
-          <div className="mt-8 flex justify-center" id="qr-code">
-            <QRCodeSVG value={url} fgColor={fgColor} bgColor={bgColor} size={512} imageSettings={imageSettings} imageRendering={'pixelated'} margin={marginSize} />
+          <div className="w-full mt-8 flex flex-col justify-center items-center" id="qr-code">
+            <QRCodeSVG value={url} fgColor={fgColor} bgColor={bgColor} size={512} imageSettings={imageSettings} imageRendering={'pixelated'} includeMargin={true} level="H" />
+            {subText && <p className="text-center font-bold text-xl">{subText}</p>}
           </div>
           <div className="mt-8 grid grid-cols-2 gap-2">
             <button
@@ -145,12 +166,6 @@ function App() {
               onClick={() => downloadQRCode('jpg')}
             >
               Download JPG
-            </button>
-            <button
-              className="p-2 text-white rounded-full bg-gradient-to-r from-purple-500 to-indigo-700"
-              onClick={() => downloadQRCode('webp')}
-            >
-              Download WebP
             </button>
             <button
               className="p-2 text-white rounded-full bg-gradient-to-r from-purple-500 to-indigo-700"
