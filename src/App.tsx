@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import './App.css'
 import { QRCodeSVG } from 'qrcode.react'
+import * as htmlToImage from 'html-to-image';
+import download from 'downloadjs';
 
 function App() {
 
@@ -8,6 +10,39 @@ function App() {
   const [fgColor, setFgColor] = useState('#000000')
   const [bgColor, setBgColor] = useState('#ffffff')
   const [logo, setLogo] = useState('')
+
+  const downloadQRCode = (format) => {
+    const qrNode = document.getElementById('qr-code');
+
+    const options = {
+      backgroundColor: bgColor,
+    };
+
+    switch (format) {
+      case 'png':
+        htmlToImage.toPng(qrNode, options).then((dataUrl) => {
+          download(dataUrl, 'qr-code.png');
+        });
+        break;
+      case 'jpg':
+        htmlToImage.toJpeg(qrNode, options).then((dataUrl) => {
+          download(dataUrl, 'qr-code.jpg');
+        });
+        break;
+      case 'webp':
+        htmlToImage.toWebp(qrNode, options).then((dataUrl) => {
+          download(dataUrl, 'qr-code.webp');
+        });
+        break;
+      case 'svg':
+        htmlToImage.toSvg(qrNode, options).then((dataUrl) => {
+          download(dataUrl, 'qr-code.svg');
+        });
+        break;
+      default:
+        break;
+    }
+  };
 
   return (
     <>
@@ -30,7 +65,7 @@ function App() {
                 type="color"
                 value={fgColor}
                 onChange={(e) => setFgColor(e.target.value)}
-                className="p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 mx-auto"
+                className="p-5 w-full border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
               />
             </label>
             <label className="flex flex-col">
@@ -39,7 +74,7 @@ function App() {
                 type="color"
                 value={bgColor}
                 onChange={(e) => setBgColor(e.target.value)}
-                className="p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 mx-auto"
+                className="p-5 w-full border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
               />
             </label>
             <label className="flex flex-col">
@@ -54,6 +89,32 @@ function App() {
           </form>
           <div className="mt-8 flex justify-center">
             <QRCodeSVG value={url} fgColor={fgColor} bgColor={bgColor} logo={logo} />
+          </div>
+          <div className="mt-4 flex justify-around">
+            <button
+              className="p-2 bg-blue-500 text-white rounded-md"
+              onClick={() => downloadQRCode('png')}
+            >
+              Download PNG
+            </button>
+            <button
+              className="p-2 bg-blue-500 text-white rounded-md"
+              onClick={() => downloadQRCode('jpg')}
+            >
+              Download JPG
+            </button>
+            <button
+              className="p-2 bg-blue-500 text-white rounded-md"
+              onClick={() => downloadQRCode('webp')}
+            >
+              Download WebP
+            </button>
+            <button
+              className="p-2 bg-blue-500 text-white rounded-md"
+              onClick={() => downloadQRCode('svg')}
+            >
+              Download SVG
+            </button>
           </div>
         </div>
       </div>
