@@ -49,6 +49,7 @@ function App() {
               <span className="mb-1">URL:</span>
               <input
                 type="text"
+                placeholder="https://example.com"
                 value={url}
                 onChange={(e) => setUrl(e.target.value)}
                 className="p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
@@ -75,7 +76,8 @@ function App() {
             <label className="flex flex-col">
               <span className="mb-1">Logo:</span>
               <input
-                type="text"
+                type="url"
+                placeholder='https://cataas.com/cat'
                 value={logo}
                 onChange={(e) => setLogo(e.target.value)}
                 className="p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
