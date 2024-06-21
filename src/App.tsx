@@ -1,15 +1,41 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import './App.css'
 import { QRCodeSVG } from 'qrcode.react'
 import * as htmlToImage from 'html-to-image';
 import download from 'downloadjs';
+
+interface ImageSettings {
+  src: string;
+  x?: number;
+  y?: number;
+  height: number;
+  width: number;
+  excavate: boolean;
+}
 
 function App() {
 
   const [url, setUrl] = useState('')
   const [fgColor, setFgColor] = useState('#000000')
   const [bgColor, setBgColor] = useState('#ffffff')
-  const [logo, setLogo] = useState('')
+  const [marginSize, setMarginSize] = useState(4)
+  const [logo, setLogo] = useState<string | null>(null)
+  const [imageSettings, setImageSettings] = useState<ImageSettings | undefined>(undefined)
+
+  useEffect(() => {
+    if (logo) {
+      const img = new Image();
+      img.src = logo;
+      img.onload = () => {
+        setImageSettings({
+          src: logo,
+          height: 64,
+          width: 64,
+          excavate: true,
+        });
+      };
+    }
+  }, [logo, setImageSettings]);
 
   const handleLogoUpload = (event) => {
     const file = event.target.files[0];
@@ -105,7 +131,7 @@ function App() {
             </label>
           </form>
           <div className="mt-8 flex justify-center" id="qr-code">
-            <QRCodeSVG value={url} fgColor={fgColor} bgColor={bgColor} logo={logo} />
+            <QRCodeSVG value={url} fgColor={fgColor} bgColor={bgColor} size={512} imageSettings={imageSettings} imageRendering={'pixelated'} margin={marginSize} />
           </div>
           <div className="mt-8 grid grid-cols-2 gap-2">
             <button
