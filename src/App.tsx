@@ -11,6 +11,17 @@ function App() {
   const [bgColor, setBgColor] = useState('#ffffff')
   const [logo, setLogo] = useState('')
 
+  const handleLogoUpload = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setLogo(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   const downloadQRCode = (format) => {
     const qrNode = document.getElementById('qr-code');
 
@@ -80,6 +91,15 @@ function App() {
                 placeholder='https://cataas.com/cat'
                 value={logo}
                 onChange={(e) => setLogo(e.target.value)}
+                className="p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              />
+            </label>
+            <label className="flex flex-col">
+              <span className="mb-1">Upload Logo:</span>
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleLogoUpload}
                 className="p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
               />
             </label>
