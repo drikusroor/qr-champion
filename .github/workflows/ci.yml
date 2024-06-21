@@ -32,7 +32,7 @@ jobs:
       run: bun run build
 
     - name: Upload pages artifacts
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-pages-artifact@v2
       with:
         name: github-pages
         path: dist
