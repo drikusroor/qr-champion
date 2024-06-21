@@ -52,6 +52,10 @@ function App() {
   const downloadQRCode = (format) => {
     const qrNode = document.getElementById('qr-code');
 
+    if (!qrNode) {
+      return;
+    }
+
     const options = {
       backgroundColor: bgColor,
     };
