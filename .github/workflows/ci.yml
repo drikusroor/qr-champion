@@ -25,7 +25,18 @@ jobs:
     - name: Build project
       run: bun run build
 
-    - name: Deploy to GitHub Pages
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: bun run deploy
+    - name: Upload pages artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        path: dist
+  
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy artifact to GitHub Pages
+        uses: actions/deploy-pages@v2
+        id: deployment
