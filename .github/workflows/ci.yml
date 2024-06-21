@@ -1,9 +1,15 @@
 name: Deploy to GitHub Pages
+run-name: ${{ github.actor }} triggered the CI workflow 🚀
 
 on:
   push:
     branches:
-      - main  # Change this to your default branch if it's not 'main'
+      - main
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
 
 jobs:
   build:
