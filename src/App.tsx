@@ -90,27 +90,27 @@ function App() {
           <div className="mt-8 flex justify-center">
             <QRCodeSVG value={url} fgColor={fgColor} bgColor={bgColor} logo={logo} />
           </div>
-          <div className="mt-4 flex justify-around">
+          <div className="mt-8 grid grid-cols-2 gap-2">
             <button
-              className="p-2 bg-blue-500 text-white rounded-md"
+              className="p-2 text-white rounded-full bg-gradient-to-r from-purple-500 to-indigo-700"
               onClick={() => downloadQRCode('png')}
             >
               Download PNG
             </button>
             <button
-              className="p-2 bg-blue-500 text-white rounded-md"
+              className="p-2 text-white rounded-full bg-gradient-to-r from-purple-500 to-indigo-700"
               onClick={() => downloadQRCode('jpg')}
             >
               Download JPG
             </button>
             <button
-              className="p-2 bg-blue-500 text-white rounded-md"
+              className="p-2 text-white rounded-full bg-gradient-to-r from-purple-500 to-indigo-700"
               onClick={() => downloadQRCode('webp')}
             >
               Download WebP
             </button>
             <button
-              className="p-2 bg-blue-500 text-white rounded-md"
+              className="p-2 text-white rounded-full bg-gradient-to-r from-purple-500 to-indigo-700"
               onClick={() => downloadQRCode('svg')}
             >
               Download SVG
