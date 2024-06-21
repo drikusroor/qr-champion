@@ -29,8 +29,8 @@ This is a custom QR code generator built with React, Vite, and Bun. It allows us
 
 ### Prerequisites
 
-- Node.js (v14 or above)
-- Bun (v0.1.0 or above)
+- Node.js (v20 or above)
+- Bun
 
 ### Installation
 
