@@ -38,8 +38,15 @@ function App() {
     }
   }, [logo, setImageSettings]);
 
-  const handleLogoUpload = (event) => {
-    const file = event.target.files[0];
+  const handleLogoUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const files = event.target.files
+
+    if (!files) {
+      return;
+    }
+
+    const file = files[0];
+
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
@@ -49,7 +56,7 @@ function App() {
     }
   };
 
-  const downloadQRCode = (format) => {
+  const downloadQRCode = (format: 'png' | 'jpg' | 'svg') => {
     const qrNode = document.getElementById('qr-code');
 
     if (!qrNode) {
