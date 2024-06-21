@@ -79,7 +79,7 @@ function App() {
   return (
     <>
       <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 p-6">
-        <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
+        <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-xl">
           <h1 className="text-2xl font-bold mb-4 text-center">Custom QR Code Generator</h1>
           <form className="flex flex-col gap-4">
             <label className="flex flex-col">
