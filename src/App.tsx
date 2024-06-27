@@ -1,8 +1,23 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import './App.css'
-import { QRCodeSVG } from 'qrcode.react'
 import * as htmlToImage from 'html-to-image';
 import download from 'downloadjs';
+
+import QRCodeStyling from "qr-code-styling";
+
+const qrCode = new QRCodeStyling({
+  width: 512,
+  height: 512,
+  image:
+    "https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg",
+  dotsOptions: {
+    color: "white",
+    type: "rounded"
+  },
+  backgroundOptions: {
+    color: "#e8e8e8"
+  },
+});
 
 interface ImageSettings {
   src: string;
@@ -18,10 +33,46 @@ function App() {
   const [url, setUrl] = useState('')
   const [fgColor, setFgColor] = useState('#000000')
   const [bgColor, setBgColor] = useState('#ffffff')
+  const [bgColorSecondary, setBgColorSecondary] = useState('#000000')
   const [marginSize, setMarginSize] = useState(4)
   const [logo, setLogo] = useState<string | null>(null)
   const [imageSettings, setImageSettings] = useState<ImageSettings | undefined>(undefined)
   const [subText, setSubText] = useState('')
+  const qrCodeRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!qrCodeRef.current) {
+      console.error('QR Code ref not found');
+      return;
+    }
+    qrCode.append(qrCodeRef.current);
+  }, []);
+
+  useEffect(() => {
+    qrCode.update({
+      data: url,
+      margin: marginSize,
+      image: imageSettings?.src,
+      imageOptions: {
+        margin: 8,
+      },
+      backgroundOptions: {
+        color: bgColor,
+        gradient: {
+          type: 'linear',
+          rotation: 0,
+          colorStops: [
+            { offset: 0, color: bgColor },
+            { offset: 1, color: bgColorSecondary },
+          ],
+        },
+      },
+      dotsOptions: {
+        color: fgColor,
+        type: "rounded"
+      },
+    });
+  }, [url, imageSettings, bgColor, bgColorSecondary, marginSize, fgColor]);
 
   useEffect(() => {
     if (logo) {
@@ -131,6 +182,16 @@ function App() {
               />
             </label>
             <label className="flex flex-col">
+              <span className="mb-1">Secondary Background Color:</span>
+              <input
+                type="color"
+                value={bgColorSecondary}
+                onChange={(e) => setBgColorSecondary(e.target.value)}
+                className="h-10 w-full border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              />
+              <button type="button" onClick={() => setBgColorSecondary(bgColor)}>Reset</button>
+            </label>
+            <label className="flex flex-col">
               <span className="mb-1">Logo:</span>
               <input
                 type="url"
@@ -170,7 +231,7 @@ function App() {
             </label>
           </form>
           <div className="w-full mt-8 flex flex-col justify-center items-center pb-4" id="qr-code">
-            <QRCodeSVG value={url} fgColor={fgColor} bgColor={bgColor} size={512} imageSettings={imageSettings} imageRendering={'pixelated'} includeMargin={true} level="H" />
+            <div ref={qrCodeRef} />
             {subText && <p className="text-center font-bold text-xl">{subText}</p>}
           </div>
           <div className="mt-8 grid grid-cols-2 gap-2">
