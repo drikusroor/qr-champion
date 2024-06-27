@@ -19,13 +19,9 @@ const qrCode = new QRCodeStyling({
   },
 });
 
-interface ImageSettings {
-  src: string;
-  x?: number;
-  y?: number;
-  height: number;
-  width: number;
-  excavate: boolean;
+interface ImageOptions {
+  size?: string;
+  margin?: string;
 }
 
 type DotStyle = 'rounded' | 'dots' | 'classy' | 'classy-rounded' | 'square' | 'extra-rounded'
@@ -36,10 +32,11 @@ function App() {
   const [fgColor, setFgColor] = useState('#000000')
   const [dotStyle, setDotStyle] = useState<DotStyle>('rounded')
   const [bgColor, setBgColor] = useState('#ffffff')
-  const [bgColorSecondary, setBgColorSecondary] = useState(null)
+  const [bgColorSecondary, setBgColorSecondary] = useState<string | null>(null)
   const [marginSize, setMarginSize] = useState(4)
   const [logo, setLogo] = useState<string | null>(null)
-  const [imageSettings, setImageSettings] = useState<ImageSettings | undefined>(undefined)
+  const [image, setImage] = useState<string | undefined>(undefined)
+  const [imageOptions, setImageOptions] = useState<ImageOptions | undefined>({ size: '.5', margin: '0' })
   const [subText, setSubText] = useState('')
   const qrCodeRef = useRef<HTMLDivElement>(null);
 
@@ -55,9 +52,10 @@ function App() {
     qrCode.update({
       data: url,
       margin: marginSize,
-      image: imageSettings?.src,
+      image,
       imageOptions: {
-        margin: 8,
+        margin: Number(imageOptions?.margin) ?? 0,
+        imageSize: Number(imageOptions?.size) ?? .5,
       },
       backgroundOptions: {
         color: bgColor,
@@ -75,22 +73,17 @@ function App() {
         type: dotStyle,
       },
     });
-  }, [url, imageSettings, bgColor, bgColorSecondary, marginSize, fgColor, dotStyle]);
+  }, [url, imageOptions, bgColor, bgColorSecondary, marginSize, fgColor, dotStyle, image]);
 
   useEffect(() => {
     if (logo) {
       const img = new Image();
       img.src = logo;
       img.onload = () => {
-        setImageSettings({
-          src: logo,
-          height: 128,
-          width: 128,
-          excavate: true,
-        });
+        setImage(logo);
       };
     }
-  }, [logo, setImageSettings]);
+  }, [logo, image, setImage]);
 
   const handleLogoUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files
@@ -229,7 +222,27 @@ function App() {
               />
             </label>
             <label className="flex flex-col">
-              <span className="mb-1">Margin Size:</span>
+              <span className="mb-1">Logo Size:</span>
+              <input
+                type="number"
+                placeholder='.5'
+                step='.1'
+                value={imageOptions?.size}
+                onChange={(e) => setImageOptions({ ...imageOptions, size: e.target.value })}
+                className="p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              />
+            </label>
+            <label className="flex flex-col">
+              <span className="mb-1">Logo Margin Size:</span>
+              <input
+                type="number"
+                value={imageOptions?.margin}
+                onChange={(e) => setImageOptions({ ...imageOptions, margin: e.target.value })}
+                className="p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              />
+            </label>
+            <label className="flex flex-col">
+              <span className="mb-1">QR Margin Size:</span>
               <input
                 type="number"
                 value={marginSize}
