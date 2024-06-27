@@ -33,7 +33,7 @@ function App() {
   const [dotStyle, setDotStyle] = useState<DotStyle>('rounded')
   const [bgColor, setBgColor] = useState('#ffffff')
   const [bgColorSecondary, setBgColorSecondary] = useState<string | null>(null)
-  const [marginSize, setMarginSize] = useState(4)
+  const [marginSize, setMarginSize] = useState(16)
   const [logo, setLogo] = useState<string | null>(null)
   const [image, setImage] = useState<string | undefined>(undefined)
   const [imageOptions, setImageOptions] = useState<ImageOptions | undefined>({ size: '.5', margin: '0' })
