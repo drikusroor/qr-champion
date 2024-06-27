@@ -196,8 +196,8 @@ function App() {
               <span className="mb-1">Secondary Background Color:</span>
               <input
                 type="color"
-                value={bgColorSecondary}
-                onChange={(e) => setBgColorSecondary(e.target.value)}
+                value={bgColorSecondary?.toString() ?? bgColor}
+                onChange={(e) => setBgColorSecondary(e.target.value.toString())}
                 className="h-10 w-full border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
               />
               <button type="button" onClick={() => setBgColorSecondary(bgColor)}>Reset</button>
