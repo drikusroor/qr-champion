@@ -28,12 +28,15 @@ interface ImageSettings {
   excavate: boolean;
 }
 
+type DotStyle = 'rounded' | 'dots' | 'classy' | 'classy-rounded' | 'square' | 'extra-rounded'
+
 function App() {
 
   const [url, setUrl] = useState('')
   const [fgColor, setFgColor] = useState('#000000')
+  const [dotStyle, setDotStyle] = useState<DotStyle>('rounded')
   const [bgColor, setBgColor] = useState('#ffffff')
-  const [bgColorSecondary, setBgColorSecondary] = useState('#000000')
+  const [bgColorSecondary, setBgColorSecondary] = useState(null)
   const [marginSize, setMarginSize] = useState(4)
   const [logo, setLogo] = useState<string | null>(null)
   const [imageSettings, setImageSettings] = useState<ImageSettings | undefined>(undefined)
@@ -63,16 +66,16 @@ function App() {
           rotation: 0,
           colorStops: [
             { offset: 0, color: bgColor },
-            { offset: 1, color: bgColorSecondary },
+            { offset: 1, color: bgColorSecondary ?? bgColor},
           ],
         },
       },
       dotsOptions: {
         color: fgColor,
-        type: "rounded"
+        type: dotStyle,
       },
     });
-  }, [url, imageSettings, bgColor, bgColorSecondary, marginSize, fgColor]);
+  }, [url, imageSettings, bgColor, bgColorSecondary, marginSize, fgColor, dotStyle]);
 
   useEffect(() => {
     if (logo) {
@@ -171,6 +174,21 @@ function App() {
                 onChange={(e) => setFgColor(e.target.value)}
                 className="h-10 w-full border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
               />
+            </label>
+            <label className="flex flex-col">
+              <span className="mb-1">Dot Style:</span>
+              <select
+                value={dotStyle}
+                onChange={(e) => setDotStyle(e.target.value as DotStyle)}
+                className="p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              >
+                <option value="rounded">Rounded</option>
+                <option value="dots">Dots</option>
+                <option value="classy">Classy</option>
+                <option value="classy-rounded">Classy Rounded</option>
+                <option value="square">Square</option>
+                <option value="extra-rounded">Extra Rounded</option>
+              </select>
             </label>
             <label className="flex flex-col">
               <span className="mb-1">Background Color:</span>
