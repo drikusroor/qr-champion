@@ -1,42 +1,89 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import './App.css'
-import { QRCodeSVG } from 'qrcode.react'
 import * as htmlToImage from 'html-to-image';
 import download from 'downloadjs';
 
-interface ImageSettings {
-  src: string;
-  x?: number;
-  y?: number;
-  height: number;
-  width: number;
-  excavate: boolean;
+import QRCodeStyling from "qr-code-styling";
+
+const qrCode = new QRCodeStyling({
+  width: 512,
+  height: 512,
+  image:
+    "https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg",
+  dotsOptions: {
+    color: "white",
+    type: "rounded"
+  },
+  backgroundOptions: {
+    color: "#e8e8e8"
+  },
+});
+
+interface ImageOptions {
+  size?: string;
+  margin?: string;
 }
+
+type DotStyle = 'rounded' | 'dots' | 'classy' | 'classy-rounded' | 'square' | 'extra-rounded'
 
 function App() {
 
   const [url, setUrl] = useState('')
   const [fgColor, setFgColor] = useState('#000000')
+  const [dotStyle, setDotStyle] = useState<DotStyle>('rounded')
   const [bgColor, setBgColor] = useState('#ffffff')
+  const [bgColorSecondary, setBgColorSecondary] = useState<string | null>(null)
   const [marginSize, setMarginSize] = useState(4)
   const [logo, setLogo] = useState<string | null>(null)
-  const [imageSettings, setImageSettings] = useState<ImageSettings | undefined>(undefined)
+  const [image, setImage] = useState<string | undefined>(undefined)
+  const [imageOptions, setImageOptions] = useState<ImageOptions | undefined>({ size: '.5', margin: '0' })
   const [subText, setSubText] = useState('')
+  const qrCodeRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!qrCodeRef.current) {
+      console.error('QR Code ref not found');
+      return;
+    }
+    qrCode.append(qrCodeRef.current);
+  }, []);
+
+  useEffect(() => {
+    qrCode.update({
+      data: url,
+      margin: marginSize,
+      image,
+      imageOptions: {
+        margin: Number(imageOptions?.margin) ?? 0,
+        imageSize: Number(imageOptions?.size) ?? .5,
+      },
+      backgroundOptions: {
+        color: bgColor,
+        gradient: {
+          type: 'linear',
+          rotation: 0,
+          colorStops: [
+            { offset: 0, color: bgColor },
+            { offset: 1, color: bgColorSecondary ?? bgColor},
+          ],
+        },
+      },
+      dotsOptions: {
+        color: fgColor,
+        type: dotStyle,
+      },
+    });
+  }, [url, imageOptions, bgColor, bgColorSecondary, marginSize, fgColor, dotStyle, image]);
 
   useEffect(() => {
     if (logo) {
       const img = new Image();
       img.src = logo;
       img.onload = () => {
-        setImageSettings({
-          src: logo,
-          height: 128,
-          width: 128,
-          excavate: true,
-        });
+        setImage(logo);
       };
     }
-  }, [logo, setImageSettings]);
+  }, [logo, image, setImage]);
 
   const handleLogoUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files
@@ -122,6 +169,21 @@ function App() {
               />
             </label>
             <label className="flex flex-col">
+              <span className="mb-1">Dot Style:</span>
+              <select
+                value={dotStyle}
+                onChange={(e) => setDotStyle(e.target.value as DotStyle)}
+                className="p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              >
+                <option value="rounded">Rounded</option>
+                <option value="dots">Dots</option>
+                <option value="classy">Classy</option>
+                <option value="classy-rounded">Classy Rounded</option>
+                <option value="square">Square</option>
+                <option value="extra-rounded">Extra Rounded</option>
+              </select>
+            </label>
+            <label className="flex flex-col">
               <span className="mb-1">Background Color:</span>
               <input
                 type="color"
@@ -129,6 +191,16 @@ function App() {
                 onChange={(e) => setBgColor(e.target.value)}
                 className="h-10 w-full border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
               />
+            </label>
+            <label className="flex flex-col">
+              <span className="mb-1">Secondary Background Color:</span>
+              <input
+                type="color"
+                value={bgColorSecondary}
+                onChange={(e) => setBgColorSecondary(e.target.value)}
+                className="h-10 w-full border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              />
+              <button type="button" onClick={() => setBgColorSecondary(bgColor)}>Reset</button>
             </label>
             <label className="flex flex-col">
               <span className="mb-1">Logo:</span>
@@ -150,7 +222,27 @@ function App() {
               />
             </label>
             <label className="flex flex-col">
-              <span className="mb-1">Margin Size:</span>
+              <span className="mb-1">Logo Size:</span>
+              <input
+                type="number"
+                placeholder='.5'
+                step='.1'
+                value={imageOptions?.size}
+                onChange={(e) => setImageOptions({ ...imageOptions, size: e.target.value })}
+                className="p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              />
+            </label>
+            <label className="flex flex-col">
+              <span className="mb-1">Logo Margin Size:</span>
+              <input
+                type="number"
+                value={imageOptions?.margin}
+                onChange={(e) => setImageOptions({ ...imageOptions, margin: e.target.value })}
+                className="p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              />
+            </label>
+            <label className="flex flex-col">
+              <span className="mb-1">QR Margin Size:</span>
               <input
                 type="number"
                 value={marginSize}
@@ -170,7 +262,7 @@ function App() {
             </label>
           </form>
           <div className="w-full mt-8 flex flex-col justify-center items-center pb-4" id="qr-code">
-            <QRCodeSVG value={url} fgColor={fgColor} bgColor={bgColor} size={512} imageSettings={imageSettings} imageRendering={'pixelated'} includeMargin={true} level="H" />
+            <div ref={qrCodeRef} />
             {subText && <p className="text-center font-bold text-xl">{subText}</p>}
           </div>
           <div className="mt-8 grid grid-cols-2 gap-2">
