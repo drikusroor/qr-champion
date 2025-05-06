@@ -216,11 +216,11 @@ function App() {
 
   return (
     <>
-      <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 p-6">
-        <h1 className="text-2xl font-bold mb-4 text-center text-white drop-shadow-lg">
+      <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 sm:p-6">
+        <h1 className="sm:text-2xl font-bold sm:mb-4 text-center sm:text-white drop-shadow-lg fixed top-1 sm:static">
           The QR Champion
         </h1>
-        <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-5xl flex justify-between gap-8">
+        <div className="bg-white p-8 sm:rounded-lg shadow-md w-full max-w-5xl flex flex-col-reverse sm:flex-row justify-between gap-8">
           <div className="flex-1">
             <form className="flex flex-col gap-4">
               <label className="flex flex-col">
@@ -351,9 +351,9 @@ function App() {
               </button>
             </div>
           </div>
-          <div className="flex-0">
+          <div className="sm:flex-0 flex sm:flex-col justify-start items-center gap-2">
             <div
-              className="w-full mt-8 flex flex-col justify-center items-center pb-4"
+              className="w-1/2 overflow-hidden sm:w-full sm:mt-8 pb-4"
               id="qr-code"
             >
               <div ref={qrCodeRef} />
@@ -361,21 +361,21 @@ function App() {
                 <p className="text-center font-bold text-xl">{subText}</p>
               )}
             </div>
-            <div className="mt-8 grid grid-cols-2 gap-2">
+            <div className="w-1/2 sm:w-full flex flex-col sm:flex-row justify-center items-center gap-2 z-10">
               <button
-                className="p-2 text-white rounded-full bg-gradient-to-r from-purple-500 to-indigo-700"
+                className="p-2 sm:px-3 text-sm sm:text-base text-white rounded-full bg-gradient-to-r from-purple-500 to-indigo-700"
                 onClick={() => downloadQRCode('png')}
               >
                 Download PNG
               </button>
               <button
-                className="p-2 text-white rounded-full bg-gradient-to-r from-purple-500 to-indigo-700"
+                className="p-2 sm:px-3 text-sm sm:text-base text-white rounded-full bg-gradient-to-r from-purple-500 to-indigo-700"
                 onClick={() => downloadQRCode('jpg')}
               >
                 Download JPG
               </button>
               <button
-                className="p-2 text-white rounded-full bg-gradient-to-r from-purple-500 to-indigo-700"
+                className="p-2 sm:px-3 text-sm sm:text-base text-white rounded-full bg-gradient-to-r from-purple-500 to-indigo-700"
                 onClick={() => downloadQRCode('svg')}
               >
                 Download SVG
