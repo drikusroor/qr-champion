@@ -218,7 +218,7 @@ function App() {
     <>
       <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 p-6">
         <h1 className="text-2xl font-bold mb-4 text-center text-white drop-shadow-lg">
-          The MCG QR Code Generator
+          The QR Champion
         </h1>
         <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-5xl flex justify-between gap-8">
           <div className="flex-1">

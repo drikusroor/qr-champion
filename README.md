@@ -1,10 +1,10 @@
-# MCG QR Code Generator
+# QR Champion
 
 This is a custom QR code generator built with React, Vite, and Bun. It allows users to create and download QR codes with customizable URL, colors, logo, margin size, and additional text. The project is deployed to GitHub Pages using GitHub Actions.
 
-[View the live project](https://drikusroor.github.io/mcg-qr-codes/)
+[View the live project](https://drikusroor.github.io/qr-champion/)
 
-![MCG QR Code Generator Screenshot](screenshot.png)
+![QR Champion Screenshot](screenshot.png)
 
 ## Features
 
@@ -37,8 +37,8 @@ This is a custom QR code generator built with React, Vite, and Bun. It allows us
 1. Clone the repository:
 
    ```sh
-   git clone https://github.com/drikusroor/mcg-qr-codes.git
-   cd mcg-qr-codes
+   git clone https://github.com/drikusroor/qr-champion.git
+   cd qr-champion
    ```
 
 2. Install the dependencies:
@@ -55,7 +55,7 @@ This is a custom QR code generator built with React, Vite, and Bun. It allows us
    bun run dev
    ```
 
-2. Open [http://localhost:5173/mcg-qr-codes/](http://localhost:5173/mcg-qr-codes/) in your browser.
+2. Open [http://localhost:5173/qr-champion/](http://localhost:5173/qr-champion/) in your browser.
 
 ### Production
 

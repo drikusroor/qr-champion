@@ -1,4 +1,4 @@
-# Copilot Instructions for MCG QR Code Generator
+# Copilot Instructions for QR Champion
 
 ## Project Overview
 
@@ -37,7 +37,7 @@ The generated QR codes can be downloaded in PNG, JPG, or SVG format. The project
 
 3. **Development Workflow**:
    - Use `bun run dev` to start the development server.
-   - Access the app at `http://localhost:5173/mcg-qr-codes/` during development.
+   - Access the app at `http://localhost:5173/qr-champion/` during development.
 
 4. **Production Build**:
    - Use `bun run build` to create a production-ready build.
