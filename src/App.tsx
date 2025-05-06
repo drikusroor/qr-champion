@@ -56,6 +56,7 @@ function App() {
     margin: searchParams.get('imageMargin') || '0',
   });
   const [subText, setSubText] = useState(searchParams.get('subText') || '');
+  const containerRef = useRef<HTMLDivElement>(null);
   const qrCodeRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -67,7 +68,14 @@ function App() {
   }, []);
 
   useEffect(() => {
+
+    const containerWidth = containerRef.current?.offsetWidth || 512;
+    const qrCodeWidth = containerWidth > 0 ? containerWidth : 512;
+    const qrCodeHeight = qrCodeWidth;
+
     qrCode.update({
+      width: qrCodeWidth,
+      height: qrCodeHeight,
       data: url,
       margin: marginSize,
       image,
@@ -221,7 +229,7 @@ function App() {
           The QR Champion
         </h1>
         <div className="bg-white p-8 sm:rounded-lg shadow-md w-full max-w-5xl flex flex-col-reverse sm:flex-row justify-between gap-8">
-          <div className="flex-1">
+          <div className="w-full sm:w-1/2">
             <form className="flex flex-col gap-4">
               <label className="flex flex-col">
                 <span className="mb-1">URL:</span>
@@ -351,9 +359,10 @@ function App() {
               </button>
             </div>
           </div>
-          <div className="sm:flex-0 flex sm:flex-col justify-start items-center gap-2">
+          <div className="w-full sm:w-1/2 sm:flex-0 flex sm:flex-col justify-start items-center gap-2">
             <div
-              className="w-1/2 overflow-hidden sm:w-full sm:mt-8 pb-4"
+              ref={containerRef}
+              className="w-1/2 sm:w-full overflow-hidden sm:mt-8 pb-4"
               id="qr-code"
             >
               <div ref={qrCodeRef} />
