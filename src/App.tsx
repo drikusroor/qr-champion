@@ -232,177 +232,181 @@ function App() {
   };
 
   return (
-    <>
-      <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 sm:p-6">
-        <h1 className="sm:text-2xl font-bold sm:mb-4 text-center text-white drop-shadow-lg py-0.5 sm:p-0">
-          QR Champion
-        </h1>
-        <div className="bg-white p-8 sm:rounded-lg shadow-md w-full max-w-5xl flex flex-col-reverse sm:flex-row justify-between gap-8">
-          <div className="w-full sm:w-1/2">
-            <form className="flex flex-col gap-4">
-              <label className="flex flex-col">
-                <span className="mb-1">URL:</span>
-                <input
-                  type="text"
-                  placeholder="https://example.com"
-                  value={url}
-                  onChange={(e) => setUrl(e.target.value)}
-                  className="p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                />
-              </label>
-              <label className="flex flex-col">
-                <span className="mb-1">Foreground Color:</span>
-                <input
-                  type="color"
-                  value={fgColor}
-                  onChange={(e) => setFgColor(e.target.value)}
-                  className="h-10 w-full border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                />
-              </label>
-              <label className="flex flex-col">
-                <span className="mb-1">Dot Style:</span>
-                <select
-                  value={dotStyle}
-                  onChange={(e) => setDotStyle(e.target.value as DotStyle)}
-                  className="p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                >
-                  <option value="rounded">Rounded</option>
-                  <option value="dots">Dots</option>
-                  <option value="classy">Classy</option>
-                  <option value="classy-rounded">Classy Rounded</option>
-                  <option value="square">Square</option>
-                  <option value="extra-rounded">Extra Rounded</option>
-                </select>
-              </label>
-              <label className="flex flex-col">
-                <span className="mb-1">Background Color:</span>
-                <input
-                  type="color"
-                  value={bgColor}
-                  onChange={(e) => setBgColor(e.target.value)}
-                  className="h-10 w-full border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                />
-              </label>
-              <label className="flex flex-col">
-                <span className="mb-1">Secondary Background Color:</span>
-                <input
-                  type="color"
-                  value={bgColorSecondary?.toString() ?? bgColor}
-                  onChange={(e) => setBgColorSecondary(e.target.value.toString())}
-                  className="h-10 w-full border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                />
-                <button type="button" onClick={() => setBgColorSecondary(bgColor)}>
-                  Reset
-                </button>
-              </label>
-              <label className="flex flex-col">
-                <span className="mb-1">Logo:</span>
-                <input
-                  type="url"
-                  placeholder="https://cataas.com/cat"
-                  value={logo || ''}
-                  onChange={(e) => setLogo(e.target.value)}
-                  className="p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                />
-              </label>
-              <label className="flex flex-col">
-                <span className="mb-1">Upload Logo:</span>
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={handleLogoUpload}
-                  className="p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                />
-              </label>
-              <label className="flex flex-col">
-                <span className="mb-1">Logo Size:</span>
-                <input
-                  type="number"
-                  placeholder=".5"
-                  step=".1"
-                  value={imageOptions?.size}
-                  onChange={(e) =>
-                    setImageOptions({ ...imageOptions, size: e.target.value })
-                  }
-                  className="p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                />
-              </label>
-              <label className="flex flex-col">
-                <span className="mb-1">Logo Margin Size:</span>
-                <input
-                  type="number"
-                  value={imageOptions?.margin}
-                  onChange={(e) =>
-                    setImageOptions({ ...imageOptions, margin: e.target.value })
-                  }
-                  className="p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                />
-              </label>
-              <label className="flex flex-col">
-                <span className="mb-1">QR Margin Size:</span>
-                <input
-                  type="number"
-                  value={marginSize}
-                  onChange={(e) => setMarginSize(Number(e.target.value))}
-                  className="p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                />
-              </label>
-              <label className="flex flex-col">
-                <span className="mb-1">Sub Text:</span>
-                <input
-                  type="text"
-                  placeholder="Scan me!"
-                  value={subText}
-                  onChange={(e) => setSubText(e.target.value)}
-                  className="p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                />
-              </label>
-            </form>
-            <div className="mt-4">
-              <button
-                className="px-3 py-2 text-white flex flex-row items-center gap-2 rounded-full bg-gradient-to-r from-red-500 to-orange-500"
-                onClick={resetDefaults}
+    <div className="h-screen sm:h-auto sm:min-h-screen flex flex-col items-center justify-center bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 sm:p-6">
+      <h1 className="sm:text-2xl font-bold sm:mb-4 text-center text-white drop-shadow-lg py-0.5 sm:p-0">
+        QR Champion
+      </h1>
+
+      {/* Flex container */}
+      <div className="bg-white p-8 sm:rounded-lg shadow-md w-full max-w-5xl flex flex-col-reverse sm:flex-row justify-between gap-8">
+
+        {/* Form container */}
+        <div className="w-full sm:w-1/2">
+          <form className="flex flex-col gap-4">
+            <label className="flex flex-col">
+              <span className="mb-1">URL:</span>
+              <input
+                type="text"
+                placeholder="https://example.com"
+                value={url}
+                onChange={(e) => setUrl(e.target.value)}
+                className="p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              />
+            </label>
+            <label className="flex flex-col">
+              <span className="mb-1">Foreground Color:</span>
+              <input
+                type="color"
+                value={fgColor}
+                onChange={(e) => setFgColor(e.target.value)}
+                className="h-10 w-full border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              />
+            </label>
+            <label className="flex flex-col">
+              <span className="mb-1">Dot Style:</span>
+              <select
+                value={dotStyle}
+                onChange={(e) => setDotStyle(e.target.value as DotStyle)}
+                className="p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
               >
-                <FiRefreshCcw />
+                <option value="rounded">Rounded</option>
+                <option value="dots">Dots</option>
+                <option value="classy">Classy</option>
+                <option value="classy-rounded">Classy Rounded</option>
+                <option value="square">Square</option>
+                <option value="extra-rounded">Extra Rounded</option>
+              </select>
+            </label>
+            <label className="flex flex-col">
+              <span className="mb-1">Background Color:</span>
+              <input
+                type="color"
+                value={bgColor}
+                onChange={(e) => setBgColor(e.target.value)}
+                className="h-10 w-full border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              />
+            </label>
+            <label className="flex flex-col">
+              <span className="mb-1">Secondary Background Color:</span>
+              <input
+                type="color"
+                value={bgColorSecondary?.toString() ?? bgColor}
+                onChange={(e) => setBgColorSecondary(e.target.value.toString())}
+                className="h-10 w-full border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              />
+              <button type="button" onClick={() => setBgColorSecondary(bgColor)}>
                 Reset
               </button>
-            </div>
-          </div>
-          <div className="w-full sm:w-1/2 sm:flex-0 flex sm:flex-col justify-start items-center gap-2">
-            <div
-              ref={containerRef}
-              className="w-1/2 sm:w-full overflow-hidden sm:mt-8 pb-4"
-              id="qr-code"
+            </label>
+            <label className="flex flex-col">
+              <span className="mb-1">Logo:</span>
+              <input
+                type="url"
+                placeholder="https://cataas.com/cat"
+                value={logo || ''}
+                onChange={(e) => setLogo(e.target.value)}
+                className="p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              />
+            </label>
+            <label className="flex flex-col">
+              <span className="mb-1">Upload Logo:</span>
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleLogoUpload}
+                className="p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              />
+            </label>
+            <label className="flex flex-col">
+              <span className="mb-1">Logo Size:</span>
+              <input
+                type="number"
+                placeholder=".5"
+                step=".1"
+                value={imageOptions?.size}
+                onChange={(e) =>
+                  setImageOptions({ ...imageOptions, size: e.target.value })
+                }
+                className="p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              />
+            </label>
+            <label className="flex flex-col">
+              <span className="mb-1">Logo Margin Size:</span>
+              <input
+                type="number"
+                value={imageOptions?.margin}
+                onChange={(e) =>
+                  setImageOptions({ ...imageOptions, margin: e.target.value })
+                }
+                className="p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              />
+            </label>
+            <label className="flex flex-col">
+              <span className="mb-1">QR Margin Size:</span>
+              <input
+                type="number"
+                value={marginSize}
+                onChange={(e) => setMarginSize(Number(e.target.value))}
+                className="p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              />
+            </label>
+            <label className="flex flex-col">
+              <span className="mb-1">Sub Text:</span>
+              <input
+                type="text"
+                placeholder="Scan me!"
+                value={subText}
+                onChange={(e) => setSubText(e.target.value)}
+                className="p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              />
+            </label>
+          </form>
+          <div className="mt-4">
+            <button
+              className="px-3 py-2 text-white flex flex-row items-center gap-2 rounded-full bg-gradient-to-r from-red-500 to-orange-500"
+              onClick={resetDefaults}
             >
-              <div ref={qrCodeRef} />
-              {subText && (
-                <p className="text-center font-bold text-xl">{subText}</p>
-              )}
-            </div>
-            <div className="w-1/2 sm:w-full flex flex-col sm:flex-row justify-center items-center gap-2 z-10">
-              <button
-                className="p-2 sm:px-3 text-sm sm:text-base text-white rounded-full bg-gradient-to-r from-purple-500 to-indigo-700"
-                onClick={() => downloadQRCode('png')}
-              >
-                Download PNG
-              </button>
-              <button
-                className="p-2 sm:px-3 text-sm sm:text-base text-white rounded-full bg-gradient-to-r from-purple-500 to-indigo-700"
-                onClick={() => downloadQRCode('jpg')}
-              >
-                Download JPG
-              </button>
-              <button
-                className="p-2 sm:px-3 text-sm sm:text-base text-white rounded-full bg-gradient-to-r from-purple-500 to-indigo-700"
-                onClick={() => downloadQRCode('svg')}
-              >
-                Download SVG
-              </button>
-            </div>
+              <FiRefreshCcw />
+              Reset
+            </button>
+          </div>
+        </div>
+
+        {/* QR Code container */}
+        <div className="w-full sm:w-1/2 sm:flex-0 flex sm:flex-col justify-start items-center gap-2">
+          <div
+            ref={containerRef}
+            className="w-1/2 sm:w-full overflow-hidden sm:mt-8 pb-4"
+            id="qr-code"
+          >
+            <div ref={qrCodeRef} />
+            {subText && (
+              <p className="text-center font-bold text-xl">{subText}</p>
+            )}
+          </div>
+          <div className="w-1/2 sm:w-full flex flex-col sm:flex-row justify-center items-center gap-2 z-10">
+            <button
+              className="p-2 sm:px-3 text-sm sm:text-base text-white rounded-full bg-gradient-to-r from-purple-500 to-indigo-700"
+              onClick={() => downloadQRCode('png')}
+            >
+              Download PNG
+            </button>
+            <button
+              className="p-2 sm:px-3 text-sm sm:text-base text-white rounded-full bg-gradient-to-r from-purple-500 to-indigo-700"
+              onClick={() => downloadQRCode('jpg')}
+            >
+              Download JPG
+            </button>
+            <button
+              className="p-2 sm:px-3 text-sm sm:text-base text-white rounded-full bg-gradient-to-r from-purple-500 to-indigo-700"
+              onClick={() => downloadQRCode('svg')}
+            >
+              Download SVG
+            </button>
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 
