@@ -5,6 +5,7 @@ import * as htmlToImage from 'html-to-image';
 import download from 'downloadjs';
 
 import QRCodeStyling from 'qr-code-styling';
+import { FiRefreshCcw } from 'react-icons/fi';
 
 const qrCode = new QRCodeStyling({
   width: 512,
@@ -342,9 +343,10 @@ function App() {
             </form>
             <div className="mt-4">
               <button
-                className="px-3 py-2 text-white rounded-full bg-gradient-to-r from-red-500 to-orange-500"
+                className="px-3 py-2 text-white flex flex-row items-center gap-2 rounded-full bg-gradient-to-r from-red-500 to-orange-500"
                 onClick={resetDefaults}
               >
+                <FiRefreshCcw />
                 Reset
               </button>
             </div>
