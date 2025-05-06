@@ -234,8 +234,8 @@ function App() {
   return (
     <>
       <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 sm:p-6">
-        <h1 className="sm:text-2xl font-bold sm:mb-4 text-center sm:text-white drop-shadow-lg fixed top-1 sm:static">
-          The QR Champion
+        <h1 className="sm:text-2xl font-bold sm:mb-4 text-center text-white drop-shadow-lg py-0.5 sm:p-0">
+          QR Champion
         </h1>
         <div className="bg-white p-8 sm:rounded-lg shadow-md w-full max-w-5xl flex flex-col-reverse sm:flex-row justify-between gap-8">
           <div className="w-full sm:w-1/2">
