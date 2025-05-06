@@ -200,6 +200,19 @@ function App() {
     }
   };
 
+  const resetDefaults = () => {
+    setUrl('');
+    setFgColor('#000000');
+    setDotStyle('rounded');
+    setBgColor('#ffffff');
+    setBgColorSecondary(null);
+    setMarginSize(16);
+    setLogo(null);
+    setImageOptions({ size: '.5', margin: '0' });
+    setSubText('');
+    setSearchParams({});
+  };
+
   return (
     <>
       <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 p-6">
@@ -327,6 +340,14 @@ function App() {
                 />
               </label>
             </form>
+            <div className="mt-4">
+              <button
+                className="px-3 py-2 text-white rounded-full bg-gradient-to-r from-red-500 to-orange-500"
+                onClick={resetDefaults}
+              >
+                Reset
+              </button>
+            </div>
           </div>
           <div className="flex-0">
             <div
