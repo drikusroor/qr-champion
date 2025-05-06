@@ -68,37 +68,46 @@ function App() {
   }, []);
 
   useEffect(() => {
+    const handleResize = () => {
+      const containerWidth = containerRef.current?.offsetWidth || 512;
+      const qrCodeWidth = containerWidth > 0 ? containerWidth : 512;
+      const qrCodeHeight = qrCodeWidth;
 
-    const containerWidth = containerRef.current?.offsetWidth || 512;
-    const qrCodeWidth = containerWidth > 0 ? containerWidth : 512;
-    const qrCodeHeight = qrCodeWidth;
-
-    qrCode.update({
-      width: qrCodeWidth,
-      height: qrCodeHeight,
-      data: url,
-      margin: marginSize,
-      image,
-      imageOptions: {
-        margin: Number(imageOptions?.margin) ?? 0,
-        imageSize: Number(imageOptions?.size) ?? 0.5,
-      },
-      backgroundOptions: {
-        color: bgColor,
-        gradient: {
-          type: 'linear',
-          rotation: 0,
-          colorStops: [
-            { offset: 0, color: bgColor },
-            { offset: 1, color: bgColorSecondary ?? bgColor },
-          ],
+      qrCode.update({
+        width: qrCodeWidth,
+        height: qrCodeHeight,
+        data: url,
+        margin: marginSize,
+        image,
+        imageOptions: {
+          margin: Number(imageOptions?.margin) ?? 0,
+          imageSize: Number(imageOptions?.size) ?? 0.5,
         },
-      },
-      dotsOptions: {
-        color: fgColor,
-        type: dotStyle,
-      },
-    });
+        backgroundOptions: {
+          color: bgColor,
+          gradient: {
+            type: 'linear',
+            rotation: 0,
+            colorStops: [
+              { offset: 0, color: bgColor },
+              { offset: 1, color: bgColorSecondary ?? bgColor },
+            ],
+          },
+        },
+        dotsOptions: {
+          color: fgColor,
+          type: dotStyle,
+        },
+      });
+    };
+
+    handleResize(); // Initial call to set dimensions
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
   }, [
     url,
     imageOptions,
