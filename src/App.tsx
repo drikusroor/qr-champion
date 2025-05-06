@@ -233,15 +233,17 @@ function App() {
 
   return (
     <div className="h-screen sm:h-auto sm:min-h-screen flex flex-col items-center justify-center bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 sm:p-6">
-      <h1 className="sm:text-2xl font-bold sm:mb-4 text-center text-white drop-shadow-lg py-0.5 sm:p-0">
+      <h1 className="sm:text-2xl font-bold sm:mb-4 text-center text-white drop-shadow-lg py-0.5 sm:p-0 h-8 sm:h-auto">
         QR Champion
       </h1>
 
       {/* Flex container */}
-      <div className="bg-white p-8 sm:rounded-lg shadow-md w-full max-w-5xl flex flex-col-reverse sm:flex-row justify-between gap-8">
+      <div
+        className="bg-white p-8 sm:rounded-lg shadow-md w-full max-w-5xl flex flex-col-reverse sm:flex-row justify-between gap-8 h-[calc(100%-32px)]"
+      >
 
         {/* Form container */}
-        <div className="w-full sm:w-1/2">
+        <div className="w-full sm:w-1/2 h-2/3 sm:h-auto overflow-y-auto">
           <form className="flex flex-col gap-4">
             <label className="flex flex-col">
               <span className="mb-1">URL:</span>
@@ -373,7 +375,7 @@ function App() {
         </div>
 
         {/* QR Code container */}
-        <div className="w-full sm:w-1/2 sm:flex-0 flex sm:flex-col justify-start items-center gap-2">
+        <div className="w-full sm:w-1/2 sm:flex-0 flex sm:flex-col justify-start items-center gap-2 h-1/3">
           <div
             ref={containerRef}
             className="w-1/2 sm:w-full overflow-hidden sm:mt-8 pb-4"
@@ -384,7 +386,7 @@ function App() {
               <p className="text-center font-bold text-xl">{subText}</p>
             )}
           </div>
-          <div className="w-1/2 sm:w-full flex flex-col sm:flex-row justify-center items-center gap-2 z-10">
+          <div className="w-1/2 sm:w-full flex flex-col sm:flex-row sm:flex-wrap justify-start items-center gap-2 z-10">
             <button
               className="p-2 sm:px-3 text-sm sm:text-base text-white rounded-full bg-gradient-to-r from-purple-500 to-indigo-700"
               onClick={() => downloadQRCode('png')}
