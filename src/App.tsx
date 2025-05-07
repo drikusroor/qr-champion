@@ -6,6 +6,7 @@ import download from 'downloadjs';
 
 import QRCodeStyling from 'qr-code-styling';
 import { FiRefreshCcw } from 'react-icons/fi';
+import fonts from './util/googleFonts';
 
 const qrCode = new QRCodeStyling({
   width: 512,
@@ -56,6 +57,7 @@ function App() {
     margin: searchParams.get('imageMargin') || '0',
   });
   const [subText, setSubText] = useState(searchParams.get('subText') || '');
+  const [fontStyle, setFontStyle] = useState(searchParams.get('fontStyle') || 'Roboto');
   const containerRef = useRef<HTMLDivElement>(null);
   const qrCodeRef = useRef<HTMLDivElement>(null);
 
@@ -129,6 +131,19 @@ function App() {
     }
   }, [logo, image, setImage]);
 
+  useEffect(() => {
+    if (fontStyle) {
+      const link = document.createElement('link');
+      link.href = `https://fonts.googleapis.com/css2?family=${fontStyle.replace(", ", "&family=").replace(" ", "+")}&display=swap`;
+      link.rel = 'stylesheet';
+      document.head.appendChild(link);
+
+      return () => {
+        document.head.removeChild(link);
+      };
+    }
+  }, [fontStyle]);
+
   // Update URL query parameters when state changes
   useEffect(() => {
     const params: Record<string, string> = {
@@ -138,6 +153,7 @@ function App() {
       bgColor,
       marginSize: marginSize.toString(),
       subText,
+      fontStyle,
     };
 
     if (bgColorSecondary) params.bgColorSecondary = bgColorSecondary;
@@ -158,6 +174,7 @@ function App() {
     logo,
     imageOptions,
     subText,
+    fontStyle,
     setSearchParams,
   ]);
 
@@ -228,6 +245,7 @@ function App() {
     setLogo(null);
     setImageOptions({ size: '.5', margin: '0' });
     setSubText('');
+    setFontStyle('Roboto');
     setSearchParams({});
   };
 
@@ -362,6 +380,20 @@ function App() {
                 className="p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
               />
             </label>
+            <label className="flex flex-col">
+              <span className="mb-1">Font Style:</span>
+              <select
+                value={fontStyle}
+                onChange={(e) => setFontStyle(e.target.value)}
+                className="p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              >
+                {fonts.map((font) => (
+                  <option key={font} value={font}>
+                    {font}
+                  </option>
+                ))}
+              </select>
+            </label>
           </form>
           <div className="mt-4">
             <button
@@ -383,7 +415,12 @@ function App() {
           >
             <div ref={qrCodeRef} />
             {subText && (
-              <p className="text-center font-bold text-xl">{subText}</p>
+              <p
+                className="text-center font-bold text-xl"
+                style={{ fontFamily: fontStyle }}
+              >
+                {subText}
+              </p>
             )}
           </div>
           <div className="w-1/2 sm:w-full flex flex-col sm:flex-row sm:flex-wrap justify-start items-center gap-2 z-10">
