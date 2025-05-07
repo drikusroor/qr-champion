@@ -263,7 +263,7 @@ function App() {
       >
 
         {/* Form container */}
-        <div className="w-full sm:w-1/2 h-2/3 sm:h-auto overflow-y-auto">
+        <div className="w-full sm:w-1/2 h-2/3 sm:h-auto overflow-y-auto sm:overflow-visible">
           <form className="flex flex-col gap-4">
             <label className="flex flex-col">
               <span className="mb-1">URL:</span>
