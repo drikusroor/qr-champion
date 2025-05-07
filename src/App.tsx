@@ -3,10 +3,12 @@ import { useSearchParams } from 'react-router-dom';
 import './App.css';
 import * as htmlToImage from 'html-to-image';
 import download from 'downloadjs';
+import Select from 'react-select';
 
 import QRCodeStyling from 'qr-code-styling';
 import { FiRefreshCcw } from 'react-icons/fi';
 import fonts from './util/googleFonts';
+import FontSelector from './util/FontSelector';
 
 const qrCode = new QRCodeStyling({
   width: 512,
@@ -381,18 +383,11 @@ function App() {
               />
             </label>
             <label className="flex flex-col">
-              <span className="mb-1">Font Style:</span>
-              <select
-                value={fontStyle}
-                onChange={(e) => setFontStyle(e.target.value)}
-                className="p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
-              >
-                {fonts.map((font) => (
-                  <option key={font} value={font}>
-                    {font}
-                  </option>
-                ))}
-              </select>
+              <FontSelector
+                fonts={fonts}
+                selectedFont={fontStyle}
+                onFontChange={(font) => setFontStyle(font)}
+              />
             </label>
           </form>
           <div className="mt-4">
