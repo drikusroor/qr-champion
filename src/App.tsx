@@ -3,7 +3,6 @@ import { useSearchParams } from 'react-router-dom';
 import './App.css';
 import * as htmlToImage from 'html-to-image';
 import download from 'downloadjs';
-import Select from 'react-select';
 
 import QRCodeStyling from 'qr-code-styling';
 import { FiRefreshCcw } from 'react-icons/fi';
